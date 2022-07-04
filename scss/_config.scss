@@ -1,0 +1,43 @@
+// font-family: 'Open Sans', sans-serif;
+// font-family: 'Raleway', sans-serif;
+
+$clr-white: rgb(244, 241, 241);
+
+@mixin Flex-sb-c {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+@mixin Flex-c-c {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+@mixin Flex-sa-c {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
+
+@mixin Abs($side, $vert, $sideType, $vertType) {
+   position: absolute;
+   @if($sideType == left) {
+      left: $side;
+   }
+   @else if($sideType == right) {
+      right: $side;
+   }
+
+   @if($vertType == top) {
+      top: $vert;
+   }
+   @else if($vertType == bottom) {
+      bottom: $vert;
+   }
+}
+
+@mixin Translate($first, $second) {
+   transform: translate($first, $second);
+}

@@ -1,0 +1,157 @@
+@import './config';
+
+* {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   font-family: 'Open Sans', sans-serif;
+   font-weight: 300;
+   font-size: 16px;
+}
+
+body {
+   width: 100%;
+   height: 100vh;
+   background: url('../images/background.png');
+   background-size: cover;
+   @include Flex-sa-c;
+   flex-direction: column;
+}
+
+h1.title {
+   text-align: center;
+   color: $clr-white;
+   font-weight: 600;
+   font-size: 1.75rem;
+   z-index: -2;
+}
+
+main {
+   width: 90%;
+   height: 85vh;
+   margin: 0 auto;
+   @include Flex-sa-c;
+   flex-direction: column;
+   background: rgba(0, 128, 0, .9);
+   border-radius: 5em;
+   border: 3px solid saddlebrown;
+   padding: 1em;
+   position: relative;
+
+   h4.result {
+      @include Abs(50%, 0, left, top);
+      @include Translate(-50%, 5%);
+      font-weight: 600;
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.5rem;
+      color: $clr-white;
+      letter-spacing: 1px;
+      padding: 1em 0;
+      width: 50%;
+      text-align: center;
+      z-index: -1;
+      opacity: 0;
+      animation: anim 1s;
+      animation-fill-mode: forwards;
+
+      &.win {
+         background: royalblue;
+      }
+      &.lose {
+         background: rgb(230, 69, 10);
+      }
+
+      @keyframes anim {
+         0% { opacity: 0; transform: translate(-50%, 5%); }
+         100% { opacity: 1; transform: translate(-50%, -100%); }
+      }
+   }
+
+   section {
+      width: 100%;
+      position: relative;
+      @include Flex-c-c;
+
+      div.info {
+         @include Abs(1em, 0, left, top);
+            
+         h3 {
+            font-family: 'Raleway', sans-serif;
+            color: $clr-white;
+            font-weight: 500;
+            font-size: 1.2rem;
+
+            span {
+               font-weight: 700;
+            }
+         }
+
+         &.enemy-info {      
+            h3 { span { color: rgb(255, 77, 77); } }
+         }
+
+         &.player-info {      
+            h3 { span { color: rgb(63, 170, 251); } }
+
+            top: auto;
+            bottom: 0;
+         }
+      }
+   }
+
+   section.menu {
+      height: 12%;
+
+      button.action {
+         padding: .75em 0;
+         width: 140px;
+         font-weight: 700;
+         text-transform: uppercase;
+         color: $clr-white;
+         font-size: 1rem;
+         border-radius: .15em;
+         outline: 0;
+         border: 0;
+         letter-spacing: -1px;
+         margin: 0 .5em;
+         cursor: pointer;
+         transition: .3s;
+
+         &.draw {
+            background: royalblue;
+         }
+         &.hold {
+            background: orangered;
+         }
+         &.surrender {
+            background: crimson;
+         }
+         &.restart {
+            background: rgb(169, 169, 0);
+         }
+
+         &:hover {
+            filter: brightness(85%);
+         }
+      }
+   }
+
+   section:not(.menu) {
+      height: 25%;
+
+      img {
+         height: 90%;
+      }
+
+      &.middle-table {
+         @include Flex-c-c;
+
+         img {
+            &.stack {
+               @include Abs(0, 50%, right, top);
+               @include Translate(0, -50%);
+            }
+         }
+      }
+   }
+}
