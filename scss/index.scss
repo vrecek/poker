@@ -60,6 +60,9 @@ main {
       &.lose {
          background: rgb(230, 69, 10);
       }
+      &.draw {
+         background: goldenrod;
+      }
 
       @keyframes anim {
          0% { opacity: 0; transform: translate(-50%, 5%); }
@@ -82,6 +85,20 @@ main {
             font-size: 1.2rem;
 
             span {
+               font-weight: 700;
+            }
+         }
+
+         h2 {
+            text-transform: uppercase;
+            font-weight: 700;
+            color: $clr-white;
+            margin-top: 1em;
+            font-size: 1.3rem;
+
+            span {
+               margin-left: .2em;
+               font-size: inherit;
                font-weight: 700;
             }
          }
@@ -117,27 +134,93 @@ main {
          cursor: pointer;
          transition: .3s;
 
-         &.draw {
+         &.start {
             background: royalblue;
          }
-         &.hold {
+         &.check {
             background: orangered;
+            display: none;
          }
          &.surrender {
             background: crimson;
+            display: none;
          }
          &.restart {
             background: rgb(169, 169, 0);
+            display: none;
          }
 
          &:hover {
             filter: brightness(85%);
          }
       }
+
+      div.bet {
+         position: relative;
+         width: 140px;
+         margin: 0 .5em;
+         display: none;
+
+         button { 
+            margin: 0;
+            background: rgb(0, 180, 72);
+         }
+
+         section {
+            width: 100%;
+            height: min-content;
+            @include Abs(0, 100%, left, bottom);
+            display: flex;
+
+            span {
+               width: 20%;
+               @include Flex-c-c;
+               color: $clr-white;
+               font-size: 2rem;
+               font-weight: 700;
+               cursor: pointer;
+            }
+
+            input {
+               width: 60%;
+               height: 100%;
+               outline: 0;
+               border: 0;
+               text-align: center;
+               font-weight: 600;
+               font-size: .9rem;
+               letter-spacing: 1px;
+               background: $clr-white;
+
+               &::-webkit-outer-spin-button,
+               &::-webkit-inner-spin-button {
+                  -webkit-appearance: none;
+                  margin: 0;
+               }
+            }
+         }
+      }
    }
 
    section:not(.menu) {
       height: 25%;
+
+      span.enemy-anim {
+         @include Abs(50%, 100%, left, bottom);
+         @include Translate(-50%, 0);
+         color: $clr-white;
+         text-transform: uppercase;
+         font-weight: 700;
+         font-family: 'Raleway', sans-serif;
+      }
+
+      h4 {
+         color: yellow;
+         font-weight: 700;
+         text-transform: uppercase;
+         margin-top: .5em;
+         font-size: 1rem;
+      }
 
       img {
          height: 90%;
@@ -146,7 +229,27 @@ main {
       &.middle-table {
          @include Flex-c-c;
 
+         h4.total-pool {
+            @include Abs(0, 50%, left, top);
+            @include Translate(0, -50%);
+            background: saddlebrown;
+            padding: .5em 1em;
+            border-radius: .2em;
+            color: $clr-white;
+            font-weight: 500;
+            font-size: 1rem;
+
+            span {
+               font-weight: 700;
+               letter-spacing: 1.5px;
+               margin-left: .5em;
+            }
+         }
+
          img {
+            transition: .3s;
+            height: 65%;
+
             &.stack {
                @include Abs(0, 50%, right, top);
                @include Translate(0, -50%);

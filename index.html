@@ -20,36 +20,49 @@
 
       <section class="enemy-table">
          <div class="info enemy-info">
-            <h3>Enemy balance: <span>999 $</span></h3>
-            <h3>Enemy cards: <span>none</span></h3>
+            <h3 class="cash">Enemy balance: <span>500 $</span></h3>
+            
+            <h2>Current bet: <span>0 $</span></h2>
+
+            <h4></h4>
          </div>
-         
-         <img class="normal" src="./images/back.png"><img class="normal" src="./images/back.png"><img class="normal" src="./images/back.png">
+
       </section>
 
       <section class="middle-table">
          <img class="stack" src="./images/back.png">
-         <img class="normal" src="./images/back.png">
-         <img class="normal" src="./images/back.png">
-         <img class="normal" src="./images/back.png">
-         <img class="normal" src="./images/back.png">
-         <img class="normal" src="./images/back.png">
+         <h4 class="total-pool">Pool: <span>0 $</span></h4>
+
+
       </section>
 
       <section class="player-table">
          <div class="info player-info">
-            <h3>My balance: <span>999 $</span></h3>
-            <h3>My cards: <span>none</span></h3>
+            <h3 class="cash">My balance: <span>500 $</span></h3>
+            <h3 class="combos">My cards: <span>none</span></h3>
+
+            <h2>Current bet: <span>0 $</span></h2>
+
+            <h4></h4>
          </div>
 
-         <img class="normal" src="./images/back.png"><img class="normal" src="./images/back.png"><img class="normal" src="./images/back.png">
+
       </section>
 
       <section class="menu">
-         <button class="action draw">Take a card</button>
-         <button class="action hold">Hold</button>
+         <button class="action start">Start game</button>
+         <button class="action check">Check</button>
          <button class="action surrender">Fold</button>
          <button class="action restart">Restart</button>
+         <div class="bet">
+            <section>
+               <span class="plus"><i class="fa fa-plus"></i></span>
+               <input type="number" class="bet-cash">
+               <span class="minus"><i class="fa fa-minus"></i></span>
+            </section>
+
+            <button class="action bet">Bet</button>
+         </div>
       </section>
    </main>
 
