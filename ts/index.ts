@@ -18,6 +18,7 @@ const foldBtn = document.querySelector('.action.surrender') as HTMLButtonElement
 const restartBtn = document.querySelector('.action.restart') as HTMLButtonElement
 
 const plrCombos = document.querySelector('.player-info .combos span') as HTMLSpanElement
+const enemyCombos = document.querySelector('.enemy-info .combos') as HTMLHeadingElement
 
 const plrBet = document.querySelector('.player-info h2 span') as HTMLSpanElement
 const enemyBet = document.querySelector('.enemy-info h2 span') as HTMLSpanElement
@@ -37,7 +38,7 @@ const game = new Game(
    playerContainer, enemyContainer, middleContainer, 
    startBtn, betSection.section, checkBtn, foldBtn, restartBtn,
    plrBet, enemyBet, poolCont, plrCash, enemyCash,
-   plrCombos, plrCheck, enemyCheck,
+   plrCombos, plrCheck, enemyCheck, enemyCombos,
    mainCont
 )
 
@@ -68,10 +69,6 @@ betSection.btn.addEventListener('click', () => {
 
    game.placeBet('player', value)
    game.placeBet('enemy')
-   // if( winner ) {
-   //    game.reverseEnemyCards()
-   //    game.finishGame(winner, mainCont)
-   // }
 })
 
 betSection.plus.addEventListener('click', () => {
