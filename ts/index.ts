@@ -30,9 +30,9 @@ const enemyCash = document.querySelector('.enemy-info .cash span') as HTMLSpanEl
 const plrCheck = document.querySelector('.player-info h4') as HTMLHeadingElement
 const enemyCheck = document.querySelector('.enemy-info h4') as HTMLHeadingElement
 
-const enemyContainer = document.querySelector('.enemy-table') as HTMLInputElement
-const playerContainer = document.querySelector('.player-table') as HTMLInputElement
-const middleContainer = document.querySelector('.middle-table') as HTMLInputElement
+const enemyContainer = document.querySelector('.enemy-table div.images') as HTMLInputElement
+const playerContainer = document.querySelector('.player-table div.images') as HTMLInputElement
+const middleContainer = document.querySelector('.middle-table div.images') as HTMLInputElement
 
 const game = new Game(
    playerContainer, enemyContainer, middleContainer, 

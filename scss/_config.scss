@@ -38,6 +38,10 @@ $clr-white: rgb(244, 241, 241);
    }
 }
 
+@mixin Clamp($min, $vw, $max) {
+   font-size: clamp(#{$min}rem, #{$vw}vw, #{$max}rem);
+}
+
 @mixin Translate($first, $second) {
    transform: translate($first, $second);
 }

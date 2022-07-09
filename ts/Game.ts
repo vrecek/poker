@@ -37,6 +37,7 @@ export default class Game {
    private resultHeader: HTMLHeadingElement | undefined
 
    private winner: PlayerName | 'draw' | null
+   private lastPlrBet: number
 
    private player: GamerInfo
    private enemy: GamerInfo
@@ -60,7 +61,7 @@ export default class Game {
    ) {
       this.player = {
          cards: [],
-         cash: 500,
+         cash: 1000,
          container: pc,
          bet: 0,
          betCont: pb,
@@ -74,7 +75,7 @@ export default class Game {
 
       this.enemy = {
          cards: [],
-         cash: 500,
+         cash: 1000,
          container: ec,
          bet: 0,
          betCont: eb,
@@ -94,6 +95,7 @@ export default class Game {
       }
 
       this.winner = null
+      this.lastPlrBet = 0
 
       this.mainCont = mainc
 
@@ -164,6 +166,21 @@ export default class Game {
       return Math.max(...cardValues) || 0
    }
 
+   private returnComboValue(x: Combos, reverse?: boolean): number {
+      switch(x) {
+         case 'High card': return 0
+         case 'Pair': return 1
+         case 'Two pairs': return 2
+         case 'Three of a kind': return 3
+         case 'Straight': return 4
+         case 'Flush': return 5
+         case 'Full house': return 6
+         case 'Four of a kind': return 7
+         case 'Poker': return 8
+         default: return 0
+      }
+   }
+
    private comboValues(): number[] {
       const [pc, ec] = [this.player.combo, this.enemy.combo]
       const [pCards, eCards] = [
@@ -175,20 +192,7 @@ export default class Game {
          [...this.enemy.cards, ...this.middle.cards].map(x => x.returnValues().value)
       ]
 
-      const vals = [pc, ec].map(x => {
-         switch(x) {
-            case 'High card': return 0
-            case 'Pair': return 1
-            case 'Two pairs': return 2
-            case 'Three of a kind': return 3
-            case 'Straight': return 4
-            case 'Flush': return 5
-            case 'Full house': return 6
-            case 'Four of a kind': return 7
-            case 'Poker': return 8
-            default: return 0
-         }
-      })
+      const vals = [pc, ec].map(x => this.returnComboValue(x))
 
       if(vals[0] === vals[1]) {
          if(pc === 'High card' || pc === 'Flush') {
@@ -246,9 +250,9 @@ export default class Game {
 
    private checkChecked(lastMove: PlayerName, skip?: boolean): void {
       const isFinished: boolean = this.isGameFinishedBool()
-      if(this.enemy.hasChecked && this.player.hasChecked) {
-         if(isFinished) return
+      if(isFinished) return
 
+      if(this.enemy.hasChecked && this.player.hasChecked) {
          this.enemy.hasChecked = false
          this.player.hasChecked = false
 
@@ -304,6 +308,8 @@ export default class Game {
    }
 
    private isGameFinishedBool(): boolean {
+      const [pc, ec] = [this.player.cash, this.enemy.cash]
+
       return this.middle.cards.length === 5 && (this.enemy.hasChecked && this.player.hasChecked)
    }
 
@@ -436,23 +442,96 @@ export default class Game {
       this[who].combo = comboTxt
    }
 
-   private enemyMove(): void {
+   private percentVal(num: number, percent: number): number {
+      return parseInt(((num / 100) * percent).toFixed(0))
+   }
+
+   private shouldBluff(): boolean {
+      const half: number = this.randomNumber(0, 100)
+
+      if(half > 75) return true
+
+      return false
+   }
+
+   private shouldEnemyFold(): boolean {
+      const ENEMY_COMBO: number = this.returnComboValue(this.enemy.combo) + 1
+      const CARD_NUM: number = this.middle.cards.length + 1
+
+      const rand: number = this.randomNumber(0, 10)
+      const percVal: number = this.percentVal(this.enemy.cash - this.middle.pool, (rand + 1) * (ENEMY_COMBO + CARD_NUM))
+
+      if(this.middle.pool >= (this.enemy.cash / 2)) {
+         const rand: number = this.randomNumber(0, 100)
+
+         if(rand > 80) return true
+
+         return false
+      }
+      
+      if(this.lastPlrBet > percVal && rand > ENEMY_COMBO + CARD_NUM) {
+         if(this.shouldBluff()) return false
+
+         return true
+      }
+
+      return false
+   }
+
+   private shouldEnemyEqual(): boolean {
+      const ENEMY_COMBO: number = this.returnComboValue(this.enemy.combo)
+
+      const rand: number = this.randomNumber(0, 10)
+      const randReturn: number = this.randomNumber(0, 100)
+
+      if(ENEMY_COMBO > rand) {
+         if(randReturn > 75) return false
+
+         return true
+      }
+
+      if(randReturn > 50) return false
+
+      return true
+   }
+
+   private enemyMove(): void | true {
       const btns = [this.betSection, this.startBtn, this.foldBtn, this.restartBtn]
 
       for(let x of btns) x.style.pointerEvents = 'none'
       this.checkBtn.style.display = 'none'
 
-      const shouldEqual: boolean = this.randomNumber(1, 2) === 1
-      const equalMoney = this.player.bet - this.enemy.bet
-
-      const isPlayerEmpty: boolean = this.player.cash === 0
-
-      if(isPlayerEmpty) {
-         // 
+      const concludeMove = () => {
+         if(this.player.hasChecked && (this.enemy.bet !== this.player.bet)) {
+            this.player.hasChecked = false
+            this.checkBtn.style.display = 'none'
+         }
+         
+         for(let x of btns) x.style.pointerEvents = 'all'
       }
 
-      outer: if(!isPlayerEmpty && true) {
+
+      if(this.shouldEnemyFold()) {
+         this.finishGame('player', this.mainCont)
+         concludeMove()
+
+         return
+      }
+      
+
+      if(this.enemy.cash < this.player.bet) {
+         this.moneyChange('enemy', this.enemy.cash)
+
+         return true
+      }
+
+      const isPlayerEmpty: boolean = this.player.cash === 0
+      const equalMoney = this.player.bet - this.enemy.bet
+
+      if(this.shouldEnemyEqual() || isPlayerEmpty) {
          if(this.player.bet === this.enemy.bet) {
+            if(isPlayerEmpty) return true
+
             this.enemy.hasChecked = true
             this.checkBtn.style.display = 'block'
 
@@ -463,23 +542,29 @@ export default class Game {
                return
             }
 
-            break outer
+            concludeMove()
+
+            return
          }
 
          this.moneyChange('enemy', equalMoney)
-      }
-      else {
-         const randomMoney: number = this.randomNumber(equalMoney + 1, equalMoney + 10)
 
-         this.moneyChange('enemy', randomMoney)
+         if(isPlayerEmpty) return true
+
+         concludeMove()
+
+         return
       }
 
-      if(this.player.hasChecked && (this.enemy.bet !== this.player.bet)) {
-         this.player.hasChecked = false
-         this.checkBtn.style.display = 'none'
-      }
+      const [cLen, combo] = [
+         this.randomNumber(0, 10 * this.middle.cards.length + 1), 
+         this.randomNumber(0, 10 * this.returnComboValue(this.enemy.combo) + 1)
+      ]
+      const randomMoney: number = this.randomNumber(equalMoney + 1, equalMoney + this.randomNumber(cLen + combo, (this.enemy.cash / (10 - combo))))
+
+      this.moneyChange('enemy', randomMoney)
       
-      for(let x of btns) x.style.pointerEvents = 'all'
+      concludeMove()
    }
 
    private gameFinishHelp() {
@@ -525,12 +610,23 @@ export default class Game {
 
       if(who === 'player' && plrPrice) {
 
-         if(plrPrice > this[who].cash) {
+         if(plrPrice > this.player.cash) {
+            this.lastPlrBet = this.player.cash
             this[who].bet += this[who].cash
             this[who].cash = 0
          }
-         else this.moneyChange(who, plrPrice)
+         else {
+            this.lastPlrBet = plrPrice
+            this.moneyChange(who, plrPrice)
+         }
+
+         if(this.enemy.cash === 0) {
+            while(this.middle.cards.length < 5) this.drawCard('middle')
+            this.gameFinishHelp()
+            return
+         }
       }
+      
       else if(who === 'enemy') {
          this.animateEnemyMove()
 
@@ -541,7 +637,13 @@ export default class Game {
          wait = true 
 
          setTimeout(() => {
-            this.enemyMove()
+            const hasEnded = this.enemyMove()
+
+            if(hasEnded) {
+               while(this.middle.cards.length < 5) this.drawCard('middle')
+               this.gameFinishHelp()
+               return
+            }
 
             this.foldBtn.style.display = 'block'
             this.betSection.style.display = 'block'
@@ -645,6 +747,9 @@ export default class Game {
 
    public finishGame(whoWin: PlayerName | 'draw', appendResultTo: HTMLElement): void {
       for(let x of [this.betSection, this.startBtn, this.checkBtn, this.foldBtn]) x.style.display = 'none'
+
+      this.cardsCombos('enemy')
+      this.cardsCombos('player')
 
       this.reverseEnemyCards()
 

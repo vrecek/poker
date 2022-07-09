@@ -27,7 +27,7 @@ h1.title {
 }
 
 main {
-   width: 90%;
+   width: 95%;
    height: 85vh;
    margin: 0 auto;
    @include Flex-sa-c;
@@ -43,7 +43,7 @@ main {
       @include Translate(-50%, 5%);
       font-weight: 600;
       font-family: 'Raleway', sans-serif;
-      font-size: 1.5rem;
+      @include Clamp(1, 3, 1.5);
       color: $clr-white;
       letter-spacing: 1px;
       padding: 1em 0;
@@ -68,6 +68,24 @@ main {
          0% { opacity: 0; transform: translate(-50%, 5%); }
          100% { opacity: 1; transform: translate(-50%, -100%); }
       }
+
+      @media (max-width: 500px) {
+         position: fixed;
+         bottom: 0;
+         left: 0;
+         top: auto;
+         width: 100%;
+         z-index: 1;
+         transform: translate(0, 0);
+         animation: anim2 1s;
+         animation-fill-mode: forwards;
+         padding: .48em 0;
+
+         @keyframes anim2 {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+         }
+      }
    }
 
    section {
@@ -82,7 +100,10 @@ main {
             font-family: 'Raleway', sans-serif;
             color: $clr-white;
             font-weight: 500;
-            font-size: 1.2rem;
+            
+            &,span {
+               @include Clamp(.8, 2, 1.2);
+            }
 
             span {
                font-weight: 700;
@@ -94,7 +115,7 @@ main {
             font-weight: 700;
             color: $clr-white;
             margin-top: 1em;
-            font-size: 1.3rem;
+            @include Clamp(1, 2, 1.3);
 
             span {
                margin-left: .2em;
@@ -112,25 +133,45 @@ main {
 
             top: auto;
             bottom: 0;
-         }
+         } 
       }
+
+      @media (max-width: 500px) {
+         &.enemy-table,
+         &.player-table {
+            flex-direction: column;
+            text-align: center;
+
+            div.info {
+               position: static;
+            }
+         }
+
+         &.player-table {
+            flex-direction: column-reverse;
+         }
+      } 
    }
 
    section.menu {
       height: 12%;
 
+      button.action,
+      div.bet { 
+         width: clamp(80px, 30vw, 140px); 
+         margin: 0 .25em;
+      }
+
       button.action {
          padding: .75em 0;
-         width: 140px;
          font-weight: 700;
          text-transform: uppercase;
          color: $clr-white;
-         font-size: 1rem;
+         @include Clamp(.8, 2.5, 1);
          border-radius: .15em;
          outline: 0;
          border: 0;
          letter-spacing: -1px;
-         margin: 0 .5em;
          cursor: pointer;
          transition: .3s;
 
@@ -157,8 +198,6 @@ main {
 
       div.bet {
          position: relative;
-         width: 140px;
-         margin: 0 .5em;
          display: none;
 
          button { 
@@ -176,9 +215,10 @@ main {
                width: 20%;
                @include Flex-c-c;
                color: $clr-white;
-               font-size: 2rem;
                font-weight: 700;
                cursor: pointer;
+
+               i { @include Clamp(.8, 2, 1); }
             }
 
             input {
@@ -188,7 +228,7 @@ main {
                border: 0;
                text-align: center;
                font-weight: 600;
-               font-size: .9rem;
+               @include Clamp(.75, 2, .9);
                letter-spacing: 1px;
                background: $clr-white;
 
@@ -204,6 +244,7 @@ main {
 
    section:not(.menu) {
       height: 25%;
+      position: relative;
 
       div.enemy-info {
          h3.combos { display: none; }
@@ -216,6 +257,13 @@ main {
          text-transform: uppercase;
          font-weight: 700;
          font-family: 'Raleway', sans-serif;
+         @include Clamp(.8, 3, 1);
+         white-space: nowrap;
+
+         @media (max-width: 500px) {
+            top: 100%;
+            bottom: auto;
+         }
       }
 
       h4 {
@@ -223,11 +271,21 @@ main {
          font-weight: 700;
          text-transform: uppercase;
          margin-top: .5em;
-         font-size: 1rem;
+         @include Clamp(.85, 3, 1);
+
+         &.check-h4 {
+            @media (max-width: 500px) {
+               position: absolute;
+               top: 100%;
+               left: 0;
+               width: 100%;
+               text-align: center;
+            }
+         }
       }
 
       img {
-         height: 90%;
+         height: clamp(80px, 15vw, 135px);
       }
 
       &.middle-table {
@@ -241,7 +299,10 @@ main {
             border-radius: .2em;
             color: $clr-white;
             font-weight: 500;
-            font-size: 1rem;
+            
+            &, span {
+               @include Clamp(.7, 1.5, 1);
+            }
 
             span {
                font-weight: 700;
@@ -252,13 +313,57 @@ main {
 
          img {
             transition: .3s;
-            height: 65%;
+            height: clamp(60px, 10vw, 90px);
 
             &.stack {
                @include Abs(0, 50%, right, top);
                @include Translate(0, -50%);
             }
          }
+
+         @media (max-width: 600px) {
+            div.wrap {
+               position: absolute;
+               width: 100%;
+               bottom: 0;
+               height: 50px;
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               flex-direction: row-reverse;
+               left: 0;
+            }
+
+            h4.total-pool {
+               transform: translate(0, 0);
+               position: static;
+            }
+
+            img {
+               &.stack {
+                  transform: translate(0, 0);
+                  position: static;
+                  height: 100%;
+               }
+            }
+         }
       }
+   }
+}
+
+@media (max-width: 768px) {
+   h1.title { display: none; }
+
+   main {
+      width: 100%;
+      height: 100vh;
+      border-radius: .1em;
+      border: 0;
+   }
+}
+
+@media (max-width: 600px) {
+   main {
+      padding: .25em;
    }
 }
