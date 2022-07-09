@@ -1,81 +1,81 @@
 const imageSources = [
     {
-        clubs: '../images/2_of_clubs.png',
-        spades: '../images/2_of_spades.png',
-        diamonds: '../images/2_of_diamonds.png',
-        hearts: '../images/2_of_hearts.png'
+        clubs: '../images/card-2-of-clubs.png',
+        spades: '../images/card-2-of-spades.png',
+        diamonds: '../images/card-2-of-diamonds.png',
+        hearts: '../images/card-2-of-hearts.png'
     },
     {
-        clubs: '../images/3_of_clubs.png',
-        spades: '../images/3_of_spades.png',
-        diamonds: '../images/3_of_diamonds.png',
-        hearts: '../images/3_of_hearts.png'
+        clubs: '../images/card-3-of-clubs.png',
+        spades: '../images/card-3-of-spades.png',
+        diamonds: '../images/card-3-of-diamonds.png',
+        hearts: '../images/card-3-of-hearts.png'
     },
     {
-        clubs: '../images/4_of_clubs.png',
-        spades: '../images/4_of_spades.png',
-        diamonds: '../images/4_of_diamonds.png',
-        hearts: '../images/4_of_hearts.png'
+        clubs: '../images/card-4-of-clubs.png',
+        spades: '../images/card-4-of-spades.png',
+        diamonds: '../images/card-4-of-diamonds.png',
+        hearts: '../images/card-4-of-hearts.png'
     },
     {
-        clubs: '../images/5_of_clubs.png',
-        spades: '../images/5_of_spades.png',
-        diamonds: '../images/5_of_diamonds.png',
-        hearts: '../images/5_of_hearts.png'
+        clubs: '../images/card-5-of-clubs.png',
+        spades: '../images/card-5-of-spades.png',
+        diamonds: '../images/card-5-of-diamonds.png',
+        hearts: '../images/card-5-of-hearts.png'
     },
     {
-        clubs: '../images/6_of_clubs.png',
-        spades: '../images/6_of_spades.png',
-        diamonds: '../images/6_of_diamonds.png',
-        hearts: '../images/6_of_hearts.png'
+        clubs: '../images/card-6-of-clubs.png',
+        spades: '../images/card-6-of-spades.png',
+        diamonds: '../images/card-6-of-diamonds.png',
+        hearts: '../images/card-6-of-hearts.png'
     },
     {
-        clubs: '../images/7_of_clubs.png',
-        spades: '../images/7_of_spades.png',
-        diamonds: '../images/7_of_diamonds.png',
-        hearts: '../images/7_of_hearts.png'
+        clubs: '../images/card-7-of-clubs.png',
+        spades: '../images/card-7-of-spades.png',
+        diamonds: '../images/card-7-of-diamonds.png',
+        hearts: '../images/card-7-of-hearts.png'
     },
     {
-        clubs: '../images/8_of_clubs.png',
-        spades: '../images/8_of_spades.png',
-        diamonds: '../images/8_of_diamonds.png',
-        hearts: '../images/8_of_hearts.png'
+        clubs: '../images/card-8-of-clubs.png',
+        spades: '../images/card-8-of-spades.png',
+        diamonds: '../images/card-8-of-diamonds.png',
+        hearts: '../images/card-8-of-hearts.png'
     },
     {
-        clubs: '../images/9_of_clubs.png',
-        spades: '../images/9_of_spades.png',
-        diamonds: '../images/9_of_diamonds.png',
-        hearts: '../images/9_of_hearts.png'
+        clubs: '../images/card-9-of-clubs.png',
+        spades: '../images/card-9-of-spades.png',
+        diamonds: '../images/card-9-of-diamonds.png',
+        hearts: '../images/card-9-of-hearts.png'
     },
     {
-        clubs: '../images/10_of_clubs.png',
-        spades: '../images/10_of_spades.png',
-        diamonds: '../images/10_of_diamonds.png',
-        hearts: '../images/10_of_hearts.png'
+        clubs: '../images/card-10-of-clubs.png',
+        spades: '../images/card-10-of-spades.png',
+        diamonds: '../images/card-10-of-diamonds.png',
+        hearts: '../images/card-10-of-hearts.png'
     },
     {
-        clubs: '../images/jack_of_clubs2.png',
-        spades: '../images/jack_of_spades2.png',
-        diamonds: '../images/jack_of_diamonds2.png',
-        hearts: '../images/jack_of_hearts2.png'
+        clubs: '../images/card-jack-of-clubs2.png',
+        spades: '../images/card-jack-of-spades2.png',
+        diamonds: '../images/card-jack-of-diamonds2.png',
+        hearts: '../images/card-jack-of-hearts2.png'
     },
     {
-        clubs: '../images/queen_of_clubs2.png',
-        spades: '../images/queen_of_spades2.png',
-        diamonds: '../images/queen_of_diamonds2.png',
-        hearts: '../images/queen_of_hearts2.png'
+        clubs: '../images/card-queen-of-clubs2.png',
+        spades: '../images/card-queen-of-spades2.png',
+        diamonds: '../images/card-queen-of-diamonds2.png',
+        hearts: '../images/card-queen-of-hearts2.png'
     },
     {
-        clubs: '../images/king_of_clubs2.png',
-        spades: '../images/king_of_spades2.png',
-        diamonds: '../images/king_of_diamonds2.png',
-        hearts: '../images/king_of_hearts2.png'
+        clubs: '../images/card-king-of-clubs2.png',
+        spades: '../images/card-king-of-spades2.png',
+        diamonds: '../images/card-king-of-diamonds2.png',
+        hearts: '../images/card-king-of-hearts2.png'
     },
     {
-        clubs: '../images/ace_of_clubs.png',
-        spades: '../images/ace_of_spades.png',
-        diamonds: '../images/ace_of_diamonds.png',
-        hearts: '../images/ace_of_hearts.png'
+        clubs: '../images/card-ace-of-clubs.png',
+        spades: '../images/card-ace-of-spades.png',
+        diamonds: '../images/card-ace-of-diamonds.png',
+        hearts: '../images/card-ace-of-hearts.png'
     }
 ];
 export default class Card {
