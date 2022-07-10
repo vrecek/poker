@@ -6,6 +6,7 @@ export default class Game {
     player;
     enemy;
     middle;
+    enemyFirstMove;
     mainCont;
     startBtn;
     betSection;
@@ -47,6 +48,7 @@ export default class Game {
         };
         this.winner = null;
         this.lastPlrBet = 0;
+        this.enemyFirstMove = 1;
         this.mainCont = mainc;
         this.startBtn = sb;
         this.betSection = bs;
@@ -335,7 +337,7 @@ export default class Game {
                 return true;
             return false;
         }
-        if (this.lastPlrBet > percVal && rand > ENEMY_COMBO + CARD_NUM) {
+        if (this.lastPlrBet > percVal || rand > ENEMY_COMBO + CARD_NUM) {
             if (this.shouldBluff())
                 return false;
             return true;
@@ -368,9 +370,9 @@ export default class Game {
             for (let x of btns)
                 x.style.pointerEvents = 'all';
         };
-        if (this.shouldEnemyFold()) {
-            this.finishGame('player', this.mainCont);
+        if (this.shouldEnemyFold() && this.enemyFirstMove !== 1) {
             concludeMove();
+            this.finishGame('player', this.mainCont);
             return;
         }
         if (this.enemy.cash < this.player.bet) {
@@ -436,10 +438,12 @@ export default class Game {
     }
     placeBet(who, plrPrice) {
         let wait = false;
+        this.enemyFirstMove = 2;
         if (who === 'player' && plrPrice) {
             if (plrPrice > this.player.cash) {
                 this.lastPlrBet = this.player.cash;
                 this[who].bet += this[who].cash;
+                this.middle.pool += this[who].cash;
                 this[who].cash = 0;
             }
             else {
@@ -558,8 +562,9 @@ export default class Game {
             this.player.cash += this.player.bet;
             this.enemy.cash += this.enemy.bet;
         }
-        else
+        else {
             this[whoWin].cash += this.middle.pool;
+        }
         this.resetRoundMoney();
         this.displayAll();
         appendResultTo.appendChild(h4);
@@ -579,6 +584,7 @@ export default class Game {
         this.player.hasChecked = false;
         this.enemy.checkCont.textContent = '';
         this.player.checkCont.textContent = '';
+        this.enemyFirstMove = 1;
         this.player.comboCont.textContent = 'none';
         this.restartBtn.style.display = 'none';
         this.startBtn.style.display = 'block';
