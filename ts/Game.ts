@@ -750,8 +750,6 @@ export default class Game {
    }
 
    public finishGame(whoWin: PlayerName | 'draw', appendResultTo: HTMLElement): void {
-      for(let x of [this.betSection, this.startBtn, this.checkBtn, this.foldBtn]) x.style.display = 'none'
-
       this.cardsCombos('enemy')
       this.cardsCombos('player')
 
@@ -784,6 +782,7 @@ export default class Game {
       appendResultTo.appendChild(h4)
 
       this.restartBtn.style.display = 'block'
+      for(let x of [this.betSection, this.startBtn, this.checkBtn, this.foldBtn]) x.style.display = 'none'
    }
 
    public restartGame(): void {

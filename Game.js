@@ -545,8 +545,6 @@ export default class Game {
         startEnd();
     }
     finishGame(whoWin, appendResultTo) {
-        for (let x of [this.betSection, this.startBtn, this.checkBtn, this.foldBtn])
-            x.style.display = 'none';
         this.cardsCombos('enemy');
         this.cardsCombos('player');
         this.reverseEnemyCards();
@@ -569,6 +567,8 @@ export default class Game {
         this.displayAll();
         appendResultTo.appendChild(h4);
         this.restartBtn.style.display = 'block';
+        for (let x of [this.betSection, this.startBtn, this.checkBtn, this.foldBtn])
+            x.style.display = 'none';
     }
     restartGame() {
         this.resetRoundMoney();
