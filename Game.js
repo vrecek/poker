@@ -1,8 +1,9 @@
-import Card from "./Card.js";
+import Card from "./js/Card.js";
 export default class Game {
     resultHeader;
     winner;
     lastPlrBet;
+    isFinished;
     player;
     enemy;
     middle;
@@ -49,6 +50,7 @@ export default class Game {
         this.winner = null;
         this.lastPlrBet = 0;
         this.enemyFirstMove = 1;
+        this.isFinished = false;
         this.mainCont = mainc;
         this.startBtn = sb;
         this.betSection = bs;
@@ -373,7 +375,7 @@ export default class Game {
         if (this.shouldEnemyFold() && this.enemyFirstMove !== 1) {
             concludeMove();
             this.finishGame('player', this.mainCont);
-            return;
+            return true;
         }
         if (this.enemy.cash < this.player.bet) {
             this.moneyChange('enemy', this.enemy.cash);
@@ -410,6 +412,7 @@ export default class Game {
         concludeMove();
     }
     gameFinishHelp() {
+        console.log('help');
         this.cardsCombos('enemy');
         this.cardsCombos('player');
         const [plrValue, enemyValue] = this.comboValues();
@@ -545,6 +548,9 @@ export default class Game {
         startEnd();
     }
     finishGame(whoWin, appendResultTo) {
+        if (this.isFinished)
+            return;
+        this.isFinished = true;
         this.cardsCombos('enemy');
         this.cardsCombos('player');
         this.reverseEnemyCards();
@@ -574,6 +580,7 @@ export default class Game {
         this.resetRoundMoney();
         this.displayAll();
         this.winner = null;
+        this.isFinished = false;
         this.player.cards = [];
         this.enemy.cards = [];
         this.middle.cards = [];

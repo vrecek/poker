@@ -39,6 +39,8 @@ export default class Game {
    private winner: PlayerName | 'draw' | null
    private lastPlrBet: number
 
+   private isFinished: boolean
+
    private player: GamerInfo
    private enemy: GamerInfo
    private middle: MiddleInfo
@@ -100,6 +102,8 @@ export default class Game {
       this.lastPlrBet = 0
 
       this.enemyFirstMove = 1
+
+      this.isFinished = false
 
       this.mainCont = mainc
 
@@ -518,7 +522,7 @@ export default class Game {
          concludeMove()
          this.finishGame('player', this.mainCont)
 
-         return
+         return true
       }
 
       if(this.enemy.cash < this.player.bet) {
@@ -570,6 +574,7 @@ export default class Game {
    }
 
    private gameFinishHelp() {
+      console.log('help');
       this.cardsCombos('enemy')
       this.cardsCombos('player')
 
@@ -578,6 +583,7 @@ export default class Game {
       this.restartBtn.style.pointerEvents = 'all'
       
       const winner = plrValue > enemyValue ? 'player' : enemyValue > plrValue ? 'enemy' : 'draw'
+
       this.finishGame(winner, this.mainCont)
    }
 
@@ -750,6 +756,9 @@ export default class Game {
    }
 
    public finishGame(whoWin: PlayerName | 'draw', appendResultTo: HTMLElement): void {
+      if(this.isFinished) return
+      this.isFinished = true
+
       this.cardsCombos('enemy')
       this.cardsCombos('player')
 
@@ -782,6 +791,7 @@ export default class Game {
       appendResultTo.appendChild(h4)
 
       this.restartBtn.style.display = 'block'
+
       for(let x of [this.betSection, this.startBtn, this.checkBtn, this.foldBtn]) x.style.display = 'none'
    }
 
@@ -790,6 +800,8 @@ export default class Game {
       this.displayAll()
       
       this.winner = null
+
+      this.isFinished = false
 
       this.player.cards = []
       this.enemy.cards = []
