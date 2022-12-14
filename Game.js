@@ -1,4 +1,4 @@
-import Card from "./js/Card.js";
+import Card from "./Card.js";
 export default class Game {
     resultHeader;
     winner;
